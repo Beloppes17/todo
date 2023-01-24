@@ -1,7 +1,7 @@
 use std::io::{Stdin, Stdout, Write};
 
 fn main() {
-    println!("👏 Seja bem vindo(a)! 👏 \n");
+    println!("👏 Seja bem vindo(a)!!! 👏 \n");
     loop {
         let mut terminal = Terminal::new();
         if !terminal.start() {
@@ -40,14 +40,6 @@ impl Terminal {
         let todo = input();
 
         Todo::new(todo)
-        // Faça a sua lógica para ler a mensagem que será utilizada para construir o
-        // `Todo`.
-        //
-        // Para implementar essa função, você poderá aproveitar parte da lógica da
-        // função `input` que apresentamos no projeto anterior. Porém, ao invés de
-        // chamar `std::io::stdin()` para invocar o método `.read_line()`, você poderá
-        // usar a instância de `Stdin` que já está no próprio terminal. Para isso, você
-        // pode fazer `self.stdin.read_line(...)`.
     }
 
     fn show_todo(&mut self, todo: &Todo) {
