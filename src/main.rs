@@ -2,9 +2,9 @@ use std::io::{Stdin, Stdout, Write};
 
 fn main() {
     println!("👏 Seja bem vindo(a)!!! 👏 \n");
+    let mut terminal = Terminal::new();
     loop {
-        let mut terminal = Terminal::new();
-        if !terminal.start() {
+        if terminal.start() {
             std::process::exit(0);
         } else {
             let mut message = terminal.ask_for_new_todo();
@@ -31,8 +31,8 @@ struct Terminal {
 impl Terminal {
     fn new() -> Terminal {
         Terminal {
-            stdin: (std::io::stdin()),
-            stdout: (std::io::stdout()),
+            stdin: std::io::stdin(),
+            stdout: std::io::stdout(),
         }
     }
     fn ask_for_new_todo(&mut self) -> Todo {
@@ -50,10 +50,10 @@ impl Terminal {
             println!("Você deseja adicionar um novo TODO? (s/n)");
             let answer = input();
             if answer == "s" {
-                return true;
+                return false;
             } else if answer == "n" {
                 println!("Finalizando o programa.");
-                return false;
+                return true;
             } else {
                 println!("Insira uma entrada valida. Se deseja criar um novo TODO, insira 's', senão, insira 'n'.");
             }
