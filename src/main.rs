@@ -5,14 +5,13 @@ fn main() {
     let mut terminal = Terminal::new();
     loop {
         if terminal.start() {
-            std::process::exit(0);
-        } else {
-            let mut message = terminal.ask_for_new_todo();
+            let message = terminal.ask_for_new_todo();
             terminal.show_todo(&message);
+        } else {
+            std::process::exit(0);
         }
     }
 }
-
 #[derive(Debug, Clone)]
 struct Todo {
     message: String,
@@ -35,9 +34,10 @@ impl Terminal {
             stdout: std::io::stdout(),
         }
     }
+
     fn ask_for_new_todo(&mut self) -> Todo {
         println!("Qual o nome do arquivo TODO você deseja criar?");
-        let todo = input();
+        let todo = self.input();
 
         Todo::new(todo)
     }
@@ -48,21 +48,20 @@ impl Terminal {
     fn start(&mut self) -> bool {
         loop {
             println!("Você deseja adicionar um novo TODO? (s/n)");
-            let answer = input();
+            let answer = self.input();
             if answer == "s" {
-                return false;
+                return true;
             } else if answer == "n" {
                 println!("Finalizando o programa.");
-                return true;
+                return false;
             } else {
                 println!("Insira uma entrada valida. Se deseja criar um novo TODO, insira 's', senão, insira 'n'.");
             }
         }
     }
-}
-
-fn input() -> String {
-    let mut buf = String::new();
-    std::io::stdin().read_line(&mut buf).unwrap();
-    buf.trim().to_string()
+    fn input(&mut self) -> String {
+        let mut buf = String::new();
+        std::io::stdin().read_line(&mut buf).unwrap();
+        buf.trim().to_string()
+    }
 }
