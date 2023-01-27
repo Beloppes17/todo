@@ -43,7 +43,7 @@ impl Terminal {
     }
 
     fn show_todo(&mut self, todo: &Todo) {
-        writeln!(self.stdout, "Todo criado: {}", todo.message).unwrap();
+        println!(self.stdout, "Todo criado: {}", todo.message).unwrap();
     }
     fn start(&mut self) -> bool {
         loop {
@@ -61,7 +61,7 @@ impl Terminal {
     }
     fn input(&mut self) -> String {
         let mut buf = String::new();
-        std::io::stdin().read_line(&mut buf).unwrap();
+        self.stdin.read_line(&mut buf).unwrap();
         buf.trim().to_string()
     }
 }
