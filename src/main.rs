@@ -61,7 +61,7 @@ impl Terminal {
     }
     fn input(&mut self) -> String {
         let mut buf = String::new();
-        std::io::stdin().read_line(&mut buf).unwrap();
+        self.stdin.read_line(&mut buf).unwrap();
         buf.trim().to_string()
     }
 }
