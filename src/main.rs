@@ -31,12 +31,11 @@ impl Terminal {
             stdout: std::io::stdout(),
         }
     }
+    fn show_message(&mut self, string: &str) {
+        writeln!(self.stdout, "{}", string).unwrap();
+    }
     fn ask_for_new_todo(&mut self) -> Todo {
-        writeln!(
-            std::io::stdout(),
-            "Qual o nome do arquivo TODO você deseja criar?"
-        )
-        .unwrap();
+        self.show_message("Qual o nome do arquivo TODO você deseja criar?");
         let todo = self.input();
         Todo::new(todo)
     }
@@ -45,15 +44,15 @@ impl Terminal {
     }
     fn start(&mut self) -> bool {
         loop {
-            writeln!(self.stdout, "Você deseja adicionar um novo TODO? (s/n)").unwrap();
+            self.show_message("Você deseja adicionar um novo TODO? (s/n)");
             let answer = self.input();
             if answer == "s" {
                 return true;
             } else if answer == "n" {
-                writeln!(self.stdout, "Finalizando o programa.").unwrap();
+                self.show_message("Finalizando o programa.");
                 return false;
             } else {
-                writeln!(self.stdout,"Insira uma entrada valida. Se deseja criar um novo TODO, insira 's', senão, insira 'n'.").unwrap();
+                self.show_message("Insira uma entrada valida. Se deseja criar um novo TODO, insira 's', senão, insira 'n'.");
             }
         }
     }
