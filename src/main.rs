@@ -1,7 +1,6 @@
 use std::io::{Stdin, Stdout, Write};
-
 fn main() {
-    println!("👏 Seja bem vindo(a)!!! 👏 \n");
+    writeln!(std::io::stdout(), "👏 Seja bem vindo(a)!!! 👏").unwrap();
     let mut terminal = Terminal::new();
     loop {
         if terminal.start() {
@@ -16,7 +15,6 @@ fn main() {
 struct Todo {
     message: String,
 }
-
 impl Todo {
     pub fn new(message: String) -> Self {
         Todo { message }
@@ -26,7 +24,6 @@ struct Terminal {
     stdin: Stdin,
     stdout: Stdout,
 }
-
 impl Terminal {
     fn new() -> Terminal {
         Terminal {
@@ -34,28 +31,29 @@ impl Terminal {
             stdout: std::io::stdout(),
         }
     }
-
     fn ask_for_new_todo(&mut self) -> Todo {
-        println!("Qual o nome do arquivo TODO você deseja criar?");
+        writeln!(
+            std::io::stdout(),
+            "Qual o nome do arquivo TODO você deseja criar?"
+        )
+        .unwrap();
         let todo = self.input();
-
         Todo::new(todo)
     }
-
     fn show_todo(&mut self, todo: &Todo) {
         writeln!(self.stdout, "Todo criado: {}", todo.message).unwrap();
     }
     fn start(&mut self) -> bool {
         loop {
-            println!("Você deseja adicionar um novo TODO? (s/n)");
+            writeln!(self.stdout, "Você deseja adicionar um novo TODO? (s/n)").unwrap();
             let answer = self.input();
             if answer == "s" {
                 return true;
             } else if answer == "n" {
-                println!("Finalizando o programa.");
+                writeln!(self.stdout, "Finalizando o programa.").unwrap();
                 return false;
             } else {
-                println!("Insira uma entrada valida. Se deseja criar um novo TODO, insira 's', senão, insira 'n'.");
+                writeln!(self.stdout,"Insira uma entrada valida. Se deseja criar um novo TODO, insira 's', senão, insira 'n'.").unwrap();
             }
         }
     }
